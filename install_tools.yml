@@ -53,6 +53,7 @@
         update_cache: yes
 
     # ---------------- Jenkins ----------------
+       # ---------------- Jenkins ----------------
     - name: Remove old Jenkins repo definitions if they exist
       file:
         path: "{{ item }}"
@@ -64,15 +65,15 @@
         - /usr/share/keyrings/jenkins-keyring.asc
         - /usr/share/keyrings/jenkins-keyring.gpg
 
-    - name: Download Jenkins GPG key
-      ansible.builtin.get_url:
-        url: https://pkg.jenkins.io/debian/jenkins.io-2023.key
-        dest: /usr/share/keyrings/jenkins-keyring.gpg
-        mode: '0644'
+    - name: Import Jenkins GPG key from keyserver
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: 5BA31D57EF5975CA
+        state: present
 
     - name: Add Jenkins repository
       apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.gpg] https://pkg.jenkins.io/debian binary/"
+        repo: "deb https://pkg.jenkins.io/debian binary/"
         state: present
         filename: jenkins
 
