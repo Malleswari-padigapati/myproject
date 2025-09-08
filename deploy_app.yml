@@ -1,0 +1,42 @@
+- hosts: all
+  become: yes
+  vars_files:
+    - vault.yml   # load encrypted variables
+
+  tasks:
+    - name: Create app network
+      docker_network:
+        name: app-network
+
+    - name: Run MySQL container
+      docker_container:
+        name: mysql-db
+        image: malliswari00/backend:v1
+        ports:
+           - "5000:5000"
+        env:
+          MYSQL_ROOT_PASSWORD: "{{ vault_mysql_root_password }}"
+          MYSQL_DATABASE: myapp
+          MYSQL_USER: myuser
+          MYSQL_PASSWORD: "{{ vault_mysql_user_password }}"
+        networks:
+          - name: app-network
+        state: started
+        restart_policy: always
+    - name: Run Backend container
+      docker_container:
+        name: backend
+        image: malliswari00/backend:v1   # Replace with your backend image
+        networks:
+          - name: app-network
+        state: started
+
+    - name: Run Nginx container
+      docker_container:
+        name: nginx
+        image: nginx:latest
+        ports:
+          - "80:80"
+        networks:
+          - name: app-network
+        state: started
