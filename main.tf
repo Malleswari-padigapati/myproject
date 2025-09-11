@@ -26,7 +26,7 @@ resource "aws_instance" "docker_app" {
               docker build -t myapp:latest .
 
               
-              docker run -d -p 8089:5000 myapp:latest
+              docker run -d -p 8085:5000 myapp:latest
               EOF
 
   tags = {
