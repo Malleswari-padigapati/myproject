@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 5000
 
 # Run the app
-CMD ["python", "app.py"]
+CMD ["python", "app.py", "--port=80", "--host=0.0.0.0"]
