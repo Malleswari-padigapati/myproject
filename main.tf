@@ -28,7 +28,7 @@ resource "aws_instance" "docker_app" {
               EOF
 
   tags = {
-    Name = "jenkins-terraform-docker"
+    Name = "jenkins"
   }
 }
 
