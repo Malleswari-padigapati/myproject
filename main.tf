@@ -36,12 +36,7 @@ resource "aws_instance" "docker_app" {
       "sudo docker ps"
     ]
 
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("practice.pem") # path to your PEM file
-      host        = self.public_ip
-    }
+    
   }
 }
 
