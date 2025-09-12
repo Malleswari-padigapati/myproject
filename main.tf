@@ -19,6 +19,9 @@ resource "aws_instance" "docker_app" {
               systemctl enable docker
 
               # Clone GitHub repo
+                 
+               
+              cd /home/ubuntu/myproject
              
               git branch: 'man', url: 'https://github.com/Malleswari-padigapati/myproject.git'
 
