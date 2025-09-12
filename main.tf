@@ -16,19 +16,13 @@ resource "aws_instance" "docker_app" {
 
               # Start Docker
               systemctl start docker
-              systemctl enable docker
-
-              # Clone GitHub repo
-                 
-               
-              cd /home/ubuntu/myproject
-             
-              git branch: 'man', url: 'https://github.com/Malleswari-padigapati/myproject.git'
+              systemct
+              # Clone GitHub repo (branch man)
+              git clone -b man https://github.com/Malleswari-padigapati/myproject.git /home/ubuntu/myproject
 
               # Build Docker image
               cd /home/ubuntu/myproject
               docker build -t myapp:latest .
-
               
               docker run -d -p 80:5000 myapp:latest
               EOF
